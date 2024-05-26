@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],
@@ -5,17 +7,39 @@ const initialGameBoard = [
 ];
 
 export default function Gameboard() {
+    const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+    function handleSelectSquare(rowIdx, colIdx) {
+        setGameBoard((prevGameBoard) => {
+          // this is NOT recommended
+          // should not mutate reference values directly
+          // instead make an update and return a copy
+          // update should be immutable
+          // prevGameBoard[rowIdx][colIdx] = 'X';
+          // return prevGameBoard;
+          const updatedBoard = [
+            ...prevGameBoard.map((innerArray) => [...innerArray]),
+          ];
+          updatedBoard[rowIdx][colIdx] = 'X';
+          return updatedBoard;
+        });
+    }
+
   return (
-    <ol id='game-board'>
-        {initialGameBoard.map((row, idx) => <li key={idx}>
-            <ol>
-                {row.map((playerSymbol, colIdx) => 
-                    (<li key={colIdx}>
-                        <button>{playerSymbol}</button>
-                    </li>)                    
-                )}
-            </ol>
-        </li> )}
+    <ol id="game-board">
+      {gameBoard.map((row, rowIdx) => (
+        <li key={rowIdx}>
+          <ol>
+            {row.map((playerSymbol, colIdx) => (
+              <li key={colIdx}>
+                <button onClick={() => handleSelectSquare(rowIdx, colIdx)}>
+                  {playerSymbol}
+                </button>
+              </li>
+            ))}
+          </ol>
+        </li>
+      ))}
     </ol>
-  )
+  );
 }
