@@ -1,36 +1,37 @@
-export default function Player({initialName, symbol, isActive}) {
-    const [playerName, setPlayerName] = useState(initialName);
-    const [isEditing, setIsEditing] = useState(false);
+import { useState } from "react";
 
-    function handleEditClick() {
-        // when setting state based on prev state: should alway pass function
-        // the function will automaticaly be called by react and update the value 
-        setIsEditing((isEditing) => !isEditing);
-    }
+export default function Player({ initialName, symbol, isActive }) {
+  const [playerName, setPlayerName] = useState(initialName);
+  const [isEditing, setIsEditing] = useState(false);
 
-    function handleChange(event) {
-        // console.log(event);
-        setPlayerName(event.target.value);
-    }
+  function handleEditClick() {
+    // when setting state based on prev state: should alway pass function
+    // the function will automaticaly be called by react and update the value
+    setIsEditing((isEditing) => !isEditing);
+  }
 
-    let editablePlayerName = <span className="player-name">{playerName}</span>;
-    // let btnCaption = "Edit";
+  function handleChange(event) {
+    // console.log(event);
+    setPlayerName(event.target.value);
+  }
 
-    if (isEditing) {
-        editablePlayerName = <input type="text" required value={playerName} onChange={handleChange}/>;
-        // btnCaption="Save";    
-    }
+  let editablePlayerName = <span className="player-name">{playerName}</span>;
+  // let btnCaption = "Edit";
 
-    return (
-      <li className={isActive? 'active' : undefined}>
-        <span className="player">
-          {editablePlayerName}
-          <span id="player-symbol">{symbol}</span>
-          <button onClick={handleEditClick}>
-            {isEditing ? "Save" : "Edit"}
-          </button>
-        </span>
-      </li>
+  if (isEditing) {
+    editablePlayerName = (
+      <input type="text" required value={playerName} onChange={handleChange} />
     );
+    // btnCaption="Save";
+  }
 
+  return (
+    <li className={isActive ? "active" : undefined}>
+      <span className="player">
+        {editablePlayerName}
+        <span id="player-symbol">{symbol}</span>
+        <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
+      </span>
+    </li>
+  );
 }
