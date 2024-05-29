@@ -6,26 +6,26 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function Gameboard({onSelectSquare, activePlayerSymbol}) {
-    const [gameBoard, setGameBoard] = useState(initialGameBoard);
+export default function Gameboard({onSelectSquare}) {
+    // const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
-    function handleSelectSquare(rowIdx, colIdx) {
-        setGameBoard((prevGameBoard) => {
-          // this is NOT recommended
-          // should not mutate reference values directly
-          // instead make an update and return a copy
-          // update should be immutable
-          // prevGameBoard[rowIdx][colIdx] = 'X';
-          // return prevGameBoard;
-          const updatedBoard = [
-            ...prevGameBoard.map((innerArray) => [...innerArray]),
-          ];
-          updatedBoard[rowIdx][colIdx] = activePlayerSymbol;
-          return updatedBoard;
-        });
+    // function handleSelectSquare(rowIdx, colIdx) {
+    //     setGameBoard((prevGameBoard) => {
+    //       // this is NOT recommended
+    //       // should not mutate reference values directly
+    //       // instead make an update and return a copy
+    //       // update should be immutable
+    //       // prevGameBoard[rowIdx][colIdx] = 'X';
+    //       // return prevGameBoard;
+    //       const updatedBoard = [
+    //         ...prevGameBoard.map((innerArray) => [...innerArray]),
+    //       ];
+    //       updatedBoard[rowIdx][colIdx] = activePlayerSymbol;
+    //       return updatedBoard;
+    //     });
 
-        onSelectSquare();   
-    }
+    //     onSelectSquare();   
+    // }
 
   return (
     <ol id="game-board">
@@ -34,7 +34,7 @@ export default function Gameboard({onSelectSquare, activePlayerSymbol}) {
           <ol>
             {row.map((playerSymbol, colIdx) => (
               <li key={colIdx}>
-                <button onClick={() => handleSelectSquare(rowIdx, colIdx)}>
+                <button onClick={onSelectSquare}>
                   {playerSymbol}
                 </button>
               </li>
